@@ -31,3 +31,18 @@ server.listen(PORT, () => {
 
 **Por qué funciona ahora:** [Justificación técnica breve] 
 
+### Error #3: error 200 cuando la ruta no existe
+**Ubicación:** Línea 28 del archivo original (servidor_malo.js)
+**Tipo de error:** Código de respuesta
+**Qué estaba mal:** tenía el código de respuesta 200 cuando la ruta no existe pero debería de ser 404
+
+    res.writeHead(200, { "Content-Type": "text/plain" })
+    res.end("Ruta no encontrada")
+
+**Cómo lo corregí:** 
+    
+    res.writeHead(404, { "Content-Type": "text/plain" })
+    res.end("Ruta no encontrada")
+
+
+**Por qué funciona ahora:** [Justificación técnica breve] 
