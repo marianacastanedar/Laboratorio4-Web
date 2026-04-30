@@ -13,3 +13,21 @@ server.listen(PORT, () => {
 }) <--- agregar ese )
 
 **Por qué funciona ahora:** [Justificación técnica breve] 
+
+### Error #2: faltaba await en fs.readFile
+**Ubicación:** Línea 22 y 24 del archivo original (servidor_malo.js)
+**Tipo de error:** Lógica Asíncrona
+**Qué estaba mal:** faltaba un await en el fs.readFile y por eso mismo se quita el JSON.stringify 
+
+    const texto = fs.readFile(filePath, "utf-8")
+    res.writeHead(200, { "Content-Type": "application/json" })
+    res.end(JSON.stringify(texto))
+
+**Cómo lo corregí:** 
+    const texto = await fs.readFile(filePath, "utf-8") <-- agregar el await
+    res.writeHead(200, { "Content-Type": "application/json" })
+    res.end((texto)) <-- quitar el JSON.stringify
+
+
+**Por qué funciona ahora:** [Justificación técnica breve] 
+
