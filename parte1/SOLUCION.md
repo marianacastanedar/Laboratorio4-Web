@@ -12,7 +12,7 @@
     console.log("Servidor corriendo en http://localhost:3000")
     }) <--- agregar ese )
 
-**Por qué funciona ahora:** [Justificación técnica breve] 
+**Por qué funciona ahora:** porque se necesita que cada función que se abre tenga el paréntesis de cierre, si no no se puede leer el archivo
 
 ### Error #2: application-json -> application/json
 **Ubicación:** Línea 15 del archivo original  
@@ -26,8 +26,7 @@
 
 
 
-**Por qué funciona ahora:** [Justificación técnica breve] 
-
+**Por qué funciona ahora:** el Content-Type estaba incorrecto, con eso el cliente recibe un tipo que no reconoce y no sabe que hacer pero con la barra ya sabe que es JSON.
 
 ### Error #3: faltaba await en fs.readFile
 **Ubicación:** Línea 22 y 24 del archivo original (servidor_malo.js)
@@ -44,7 +43,7 @@
     res.end((texto)) <-- quitar el JSON.stringify
 
 
-**Por qué funciona ahora:** [Justificación técnica breve] 
+**Por qué funciona ahora:** fs.readFile es asíncrona, o sea que no devuelve el contenido del archivo directamente sino una Promise. Sin await texto era esa Promise. Con await, el código espera a que termine de leer y texto ya funcionaría. Y como datos.json ya es un string válido no se necesita JSON.stringify.
 
 ### Error #4: error 200 cuando la ruta no existe
 **Ubicación:** Línea 28 del archivo original (servidor_malo.js)
@@ -60,7 +59,7 @@
     res.end("Ruta no encontrada")
 
 
-**Por qué funciona ahora:** [Justificación técnica breve] 
+**Por qué funciona ahora:** el 200 es para "todo bien" asi que el 404 es el código que era para decirle al cliente que esa ruta no existe
 
 ### Error #5: un content type incorrecto
 **Ubicación:** Línea 15 del archivo original (servidor_malo.js)
@@ -76,4 +75,4 @@
     res.end("Ruta de información")
 
 
-**Por qué funciona ahora:** [Justificación técnica breve] 
+**Por qué funciona ahora:** el Content-Type tiene que decir lo que se está enviando, antes decía JSON pero mandaba texto, el cliente va a intentar como JSON y no funcionaría, en cambio con text/plain, el cliente ya sabe que es solo texto y no falla.
